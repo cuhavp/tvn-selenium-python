@@ -10,6 +10,7 @@ def browser(cbt_config, request):
     # ChromeDriver must be on the system PATH
     b = selenium.webdriver.Chrome("/Users/hdo/Documents/chromedriver")
     b.implicitly_wait(10)
+    b.get(cbt_config['env']['base_url'])
     failed_before = request.session.testsfailed
     yield b
     if request.session.testsfailed != failed_before:
@@ -23,22 +24,7 @@ def cbt_config(scope='session'):
     config_path = path.realpath('project/cbt_config.json')
     with open(config_path) as config_file:
         config = json.load(config_file)
-
-    assert 'authentication' in config
-
     return config
-
-
-@pytest.mark.xfail(condition=lambda: True, reason='this test is expecting failure')
-def test_xfail_expected_failure():
-    """this test is an xfail that will be marked as expected failure"""
-    assert False
-
-
-@pytest.mark.xfail(condition=lambda: True, reason='this test is expecting failure')
-def test_xfail_unexpected_pass():
-    """this test is an xfail that will be marked as unexpected success"""
-    assert True
 
 
 def take_screenshot(browser, test_name):

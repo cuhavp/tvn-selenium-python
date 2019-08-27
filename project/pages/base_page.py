@@ -18,22 +18,22 @@ class Page(object):
     def all(self, *loc):
         return self.driver.find_elements(*loc)
 
-    def open(self, url):
-        url = self.base_url + url
+    def open(self, path):
+        url = self.base_url + path
         self.driver.get(url)
 
-    def click(self, locator):
+    def click(self, *locator):
         try:
-            element = self.find(locator)
+            element = self.find(*locator)
             if element is not None:
                 element.click()
         except Exception as e:
             print(str(e))
-            print("Error when clicking the element with path,'%s' in the conf/locators.conf file" % locator)
+            raise ("Error when clicking the element with path,'%s' in the conf/locators.conf file" % locator)
 
-    def fill(self, locator, with_text, clear=True):
+    def fill(self, *locator, with_text, clear=True):
         try:
-            element = self.find(locator)
+            element = self.find(*locator)
             if element is not None:
                 if clear is True:
                     element.clear()
@@ -41,14 +41,14 @@ class Page(object):
 
         except Exception as e:
             print(str(e))
-            print("Error when fill the element with path,'%s' in the conf/locators.conf file" % locator)
+            raise("Error when fill the element with path,'%s' in the conf/locators.conf file" % locator)
 
-    def is_element_visible(self, locator):
-        if self.find(locator) is not None:
+    def is_element_visible(self, *locator):
+        if self.find(*locator) is not None:
             return True
         else:
             return False
 
-    def text(self, locator):
-        if self.is_element_visible(locator) is True:
-            return self.find(locator).text
+    def text(self, *locator):
+        if self.is_element_visible(*locator) is True:
+            return self.find(*locator).text

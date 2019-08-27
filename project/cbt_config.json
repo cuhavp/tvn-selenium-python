@@ -1,0 +1,13 @@
+{
+  "authentication": {
+    "username": "",
+    "key": ""
+  },
+  "webdriver": {
+    "name": "Hand-on UI Testing with python",
+    "build": "1.0",
+    "browserName": "chrome",
+    "platform": "Windows 10",
+    "screenResolution": "1366x768"
+  }
+}

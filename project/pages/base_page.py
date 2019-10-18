@@ -1,8 +1,9 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
-
-class Page(object):
+class Page():
     """
     Base class that all page models can inherit from
     """
@@ -11,6 +12,7 @@ class Page(object):
         self.base_url = base_url
         self.driver = selenium_driver
         self.timeout = 30
+        self.wait = WebDriverWait(self.driver, self.timeout)
 
     def find(self, *loc):
         return self.driver.find_element(*loc)
@@ -32,6 +34,10 @@ class Page(object):
             raise ("Error when clicking the element with path,'%s' in the conf/locators.conf file" % locator)
 
     def fill(self, *locator, with_text, clear=True):
+        """
+
+        :rtype: object
+        """
         try:
             element = self.find(*locator)
             if element is not None:

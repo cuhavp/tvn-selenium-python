@@ -3,7 +3,6 @@ import selenium.webdriver
 import json
 from os import path
 
-
 @pytest.fixture
 def browser(cbt_config, request):
     # This browser will be local
@@ -21,11 +20,19 @@ def browser(cbt_config, request):
 
 @pytest.fixture
 def cbt_config(scope='session'):
-    config_path = path.realpath('project/cbt_config.json')
+    config_path = path.realpath('project/configuration/config.json')
     with open(config_path) as config_file:
         config = json.load(config_file)
     return config
 
+
+def pytest_runtest_setup(item):
+    print(
+    "setting up", item
+    )
+
+def pytest_runtest_teardown(item):
+    print("Clear test",item)
 
 def take_screenshot(browser, test_name):
     screenshots_dir = "project/reports"
@@ -33,3 +40,5 @@ def take_screenshot(browser, test_name):
     browser.save_screenshot(
         screenshot_file_path
     )
+
+
